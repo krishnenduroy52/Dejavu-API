@@ -208,6 +208,70 @@ const fetchSearch = async ({
   }
 };
 
+const fetchVideo = async () => {
+  const { data } = await axios.get(
+    "https://megacloud.tv/embed-1/ajax/e-1/getSources?id=9JXCOiGwpL8b",
+    {
+      headers: {
+        "x-requested-with": "XMLHttpRequest",
+        Referer: "https://megacloud.tv/embed-1/e-1/9JXCOiGwpL8b?z=",
+      },
+    }
+  );
+  return data;
+};
+
+const fetchDetailsMovie = async (id: string) => {
+  const { data } = await axiosInstance.get(`/movie/${id}`);
+  const $ = load(data);
+
+  const detail: any = {
+    title: $(".detail_page-watch")
+      .find(".heading-name")
+      .text()
+      .replace(/\n/g, "")
+      .trim(),
+    img: $(".film-poster > img").attr("data-src"),
+    description: $(".detail_page-watch")
+      .find(".description")
+      .text()
+      .split("\n")[2]
+      .trim(),
+    detail: {
+      released: $(".elements")
+        .find(".row-line:eq(0)")
+        .text()
+        ?.split("\n")[1]
+        .trim()
+        .split(":")[1]
+        .trim(),
+      genre: $(".elements")
+        .find(".row-line:eq(1)")
+        .find("a")
+        ?.map((_: number, el: cheerio.Element) => $(el).text())
+        .get(),
+      casts: $(".elements")
+        .find(".row-line:eq(2)")
+        .find("a")
+        ?.map((_: number, el: cheerio.Element) => $(el).text())
+        .get(),
+      duration: $(".elements")
+        .find(".row-line:eq(3)")
+        .text()
+        ?.split("\n")[1]
+        .trim()
+        .split(":")[1]
+        .trim(),
+
+      country: $(".elements").find(".row-line:eq(4)").find("a").text(),
+      production: $(".elements").find(".row-line").last().find("a")?.text(),
+    },
+  };
+
+  return { result: detail };
+};
+
+// https://megacloud.tv/embed-1/e-1/9JXCOiGwpL8b?z=
 export {
   fetchTrendingMovies,
   fetchTrendingTVShow,
@@ -215,4 +279,6 @@ export {
   fetchLatestTVShows,
   fetchCommingSoon,
   fetchSearch,
+  fetchVideo,
+  fetchDetailsMovie,
 };
