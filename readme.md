@@ -127,25 +127,15 @@ git push -u origin <your_branch_name>
 <a href="https://www.linkedin.com/in/krishnendu-roy-577251168/">
 <h5 align="center"><b>Krishnendu Roy</b></a>
 
-## Open Source Programs we have been associated with
-
-<p align="center">
-<a href="https://lgmsoc.co/">
-<img  height=30% src="https://i.postimg.cc/2jPGcsqW/logo.png">
-<a href="https://devincept.codes/projects.html">
-<img width=50% src="https://raw.githubusercontent.com/smv1999/CompetitiveProgrammingQuestionBank/master/images/devincept.gif">
-</p>
-<a href="https://hacktoberfest.digitalocean.com/">
-<img width=30% src="https://hacktoberfest.digitalocean.com/_nuxt/img/logo-hacktoberfest-full.f42e3b1.svg">
-</p>
-     
 <!-- ## Code of Conduct
 <p align="center">
 <a href="https://github.com/QAZIMAAZARSHAD/movwatch-api/blob/master/CODE_OF_CONDUCT.md">
 <img width=55% src="https://media.giphy.com/media/qHRwTyhWIj4UU/200w_d.gif"></p>
 <h5 align="center"><b>Click to read</b></a>
    -->
-## License 
+
+## License
+
 <p align="center">
 <a href="https://github.com/krishnenduroy52/movwatch-api/blob/master/LICENSE">
 <img width=55% src="https://media0.giphy.com/media/3ornjXbo3cjqh2BIyY/200.gif"></p>
