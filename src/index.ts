@@ -34,7 +34,7 @@ app.get("/", (req: any, res: any) => {
       "/details/movie/:id",
     ],
     "endpoints(Under Development)": ["/details/tv/:id"],
-    "endpoints(Not Working)": ["/watch/:id (pain in my ass)"],
+    "endpoints(Not Working :) Pain in my ass)": ["/watch/:id"],
     "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
   };
   res.status(200).send(homeinfo);
