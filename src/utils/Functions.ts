@@ -31,6 +31,7 @@ const fetchTrendingMovies = async () => {
       hasNextPage: false,
       results: movies.slice(0, -1),
       total: movies.length,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
     return { error };
@@ -63,6 +64,7 @@ const fetchTrendingTVShow = async () => {
       hasNextPage: false,
       results: tvshow.slice(0, -1),
       total: tvshow.length - 1,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
     return { error };
@@ -95,6 +97,7 @@ const fetchLatestMovie = async () => {
       hasNextPage: false,
       results: tvshow.slice(0, -1),
       total: tvshow.length - 1,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
     return { error };
@@ -127,6 +130,7 @@ const fetchLatestTVShows = async () => {
       hasNextPage: false,
       results: tvshow.slice(0, -1),
       total: tvshow.length - 1,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
     return { error };
@@ -159,6 +163,7 @@ const fetchCommingSoon = async () => {
       hasNextPage: false,
       results: tvshow.slice(0, -1),
       total: tvshow.length - 1,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
     return { error };
@@ -202,6 +207,7 @@ const fetchSearch = async ({
       hasNextPage: hasNextPage,
       results: serachResult.slice(0, -1),
       total: serachResult.length - 1,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
     return { error };
@@ -268,7 +274,10 @@ const fetchDetailsMovie = async (id: string) => {
     },
   };
 
-  return { result: detail };
+  return {
+    result: detail,
+    "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
+  };
 };
 
 // https://megacloud.tv/embed-1/e-1/9JXCOiGwpL8b?z=

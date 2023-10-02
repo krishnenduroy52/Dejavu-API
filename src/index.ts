@@ -22,7 +22,7 @@ app.use(cors(corsOptions));
 
 app.get("/", (req: any, res: any) => {
   const homeinfo = {
-    message: "Welcome to the MovWatch API! 🎉",
+    message: "Welcome to the DejaVu API! 🎉",
     "endpoints(Working)": [
       "/trending-movies",
       "/trending-tv-shows",
