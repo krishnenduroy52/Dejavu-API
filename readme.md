@@ -139,9 +139,14 @@ git push -u origin <your_branch_name>
 <p align="center">
 <a href="https://github.com/krishnenduroy52/movwatch-api/blob/master/LICENSE">
 <img width=55% src="https://media0.giphy.com/media/3ornjXbo3cjqh2BIyY/200.gif"></p>
-<h5 align="center"><b>MIT License</b></a>  
-  
+<h5 align="center"><b>MIT License</b></a>
+
+## Support
+
+<p align="center"><a href="https://www.buymeacoffee.com/krishnendu"><img src="https://i.imgur.com/nInEWi1.png"></a></p>
+
 ## Contributors
+
 <a href="https://github.com/krishnenduroy52/movwatch-api/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=krishnenduroy52/movwatch-api" />
 </a>
