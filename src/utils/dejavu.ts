@@ -2,15 +2,23 @@ const axios = require("axios");
 const { load } = require("cheerio");
 require("dotenv").config();
 
-const BASE_URL: string = process.env.URL || "https://sflix.is/";
+import type {
+  IError,
+  ITrendingMoviesResponse,
+  ITrendingMovie,
+} from "../types/dejavu.d.ts";
+
+const BASE_URL: string = process.env.URL || "";
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
-const fetchTrendingMovies = async () => {
+const fetchTrendingMovies = async (): Promise<
+  ITrendingMoviesResponse | IError
+> => {
   try {
     const { data } = await axiosInstance.get("/home");
     const $ = load(data);
 
-    const movies: any[] = [];
+    const movies: ITrendingMovie[] = [];
     $("#trending-movies > .film_list > .film_list-wrap > div").each(
       (index: number, element: any) => {
         const $filmDetail = $(element).find(".film-detail");
@@ -30,11 +38,11 @@ const fetchTrendingMovies = async () => {
       currentPage: 1,
       hasNextPage: false,
       results: movies.slice(0, -1),
-      total: movies.length,
+      length: movies.length,
       "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
-    return { error };
+    return { error: `We are facing a problem  ${error}` };
   }
 };
 

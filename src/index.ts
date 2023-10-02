@@ -10,7 +10,7 @@ import {
   fetchVideo,
   fetchDetailsMovie,
   fetchDetailsTVShow,
-} from "./utils/Functions";
+} from "./utils/dejavu";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
