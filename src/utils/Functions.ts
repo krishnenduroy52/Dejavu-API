@@ -2,8 +2,7 @@ const axios = require("axios");
 const { load } = require("cheerio");
 require("dotenv").config();
 
-const BASE_URL: string = process.env.URL || "";
-console.log(BASE_URL);
+const BASE_URL: string = process.env.URL || "https://sflix.is/";
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 const fetchTrendingMovies = async () => {
