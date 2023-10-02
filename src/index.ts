@@ -9,6 +9,7 @@ import {
   fetchSearch,
   fetchVideo,
   fetchDetailsMovie,
+  fetchDetailsTVShow,
 } from "./utils/Functions";
 
 const app = express();
@@ -29,10 +30,11 @@ app.get("/", (req: any, res: any) => {
       "/latest-movies",
       "/latest-tv-shows",
       "/comming-soon",
-      "/search/{YOUR_QUERY}?page=${PAGE_NUMBER}",
+      "/search/{MOVIE_NAME}?page={PAGE_NUMBER}",
       "/details/movie/:id",
     ],
-    "endpoints(Under Development)": ["/details/tv/:id", "/watch/:id"],
+    "endpoints(Under Development)": ["/details/tv/:id"],
+    "endpoints(Not Working)": ["/watch/:id (pain in my ass)"],
     "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
   };
   res.status(200).send(homeinfo);
@@ -138,6 +140,22 @@ app.get("/details/movie/:id", async (req: any, res: any) => {
   try {
     const { id } = req.params;
     const data = await fetchDetailsMovie(id);
+    if ("error" in data) {
+      return res
+        .status(400)
+        .send({ error: `Some error occurred: ${data.error}` });
+    }
+
+    return res.status(200).json(data);
+  } catch (error) {
+    res.status(400).send(`Some error occurred: ${error}`);
+  }
+});
+
+app.get("/details/tv/:id", async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const data = await fetchDetailsTVShow(id);
     if ("error" in data) {
       return res
         .status(400)

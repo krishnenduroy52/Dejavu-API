@@ -54,7 +54,7 @@ const fetchTrendingTVShow = async () => {
           detail: {
             rating: $filmDetail.find(".fdi-item:first-child").text().trim(),
             quality: $filmDetail.find(".fdi-item strong").text().trim(),
-            year: $filmDetail.find(".fdi-item:last-child").text().trim(),
+            recent: $filmDetail.find(".fdi-item:last-child").text().trim(),
           },
         });
       }
@@ -120,7 +120,7 @@ const fetchLatestTVShows = async () => {
           detail: {
             rating: $filmDetail.find(".fdi-item:first-child").text().trim(),
             quality: $filmDetail.find(".fdi-item strong").text().trim(),
-            year: $filmDetail.find(".fdi-item:last-child").text().trim(),
+            recent: $filmDetail.find(".fdi-item:last-child").text().trim(),
           },
         });
       }
@@ -152,8 +152,7 @@ const fetchCommingSoon = async () => {
           img: $(element).find(".film-poster > img").attr("data-src"),
           detail: {
             rating: $filmDetail.find(".fdi-item:first-child").text().trim(),
-            quality: $filmDetail.find(".fdi-item strong").text().trim(),
-            year: $filmDetail.find(".fdi-item:last-child").text().trim(),
+            category: $filmDetail.find(".fdi-item strong").text().trim(),
           },
         });
       }
@@ -196,9 +195,8 @@ const fetchSearch = async ({
         title: $(element).find(".film-name > a").text(),
         img: $(element).find(".film-poster > img").attr("data-src"),
         detail: {
-          rating: $filmDetail.find(".fdi-item:first-child").text().trim(),
-          quality: $filmDetail.find(".fdi-item strong").text().trim(),
-          year: $filmDetail.find(".fdi-item:last-child").text().trim(),
+          year: $filmDetail.find(".fdi-item:first-child").text().trim(),
+          category: $filmDetail.find(".fdi-item strong").text().trim(),
         },
       });
     });
@@ -244,6 +242,65 @@ const fetchDetailsMovie = async (id: string) => {
       .split("\n")[2]
       .trim(),
     detail: {
+      category: "Movie",
+      released: $(".elements")
+        .find(".row-line:eq(0)")
+        .text()
+        ?.split("\n")[1]
+        .trim()
+        .split(":")[1]
+        .trim(),
+      genre: $(".elements")
+        .find(".row-line:eq(1)")
+        .find("a")
+        ?.map((_: number, el: cheerio.Element) => $(el).text())
+        .get(),
+      casts: $(".elements")
+        .find(".row-line:eq(2)")
+        .find("a")
+        ?.map((_: number, el: cheerio.Element) => $(el).text())
+        .get(),
+      duration: $(".elements")
+        .find(".row-line")
+        .last()
+        .find("a")
+        ?.map((_: number, el: cheerio.Element) => $(el).text())
+        .get(),
+
+      country: $(".elements").find(".row-line:eq(4)").find("a").text(),
+      production: $(".elements")
+        .find(".row-line")
+        .last()
+        .find("a")
+        ?.map((_: number, el: cheerio.Element) => $(el).text())
+        .get(),
+    },
+  };
+
+  return {
+    result: detail,
+    "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
+  };
+};
+
+const fetchDetailsTVShow = async (id: string) => {
+  const { data } = await axiosInstance.get(`/tv/${id}`);
+  const $ = load(data);
+
+  const detail: any = {
+    title: $(".detail_page-watch")
+      .find(".heading-name")
+      .text()
+      .replace(/\n/g, "")
+      .trim(),
+    img: $(".film-poster > img").attr("data-src"),
+    description: $(".detail_page-watch")
+      .find(".description")
+      .text()
+      .split("\n")[2]
+      .trim(),
+    detail: {
+      category: "TV",
       released: $(".elements")
         .find(".row-line:eq(0)")
         .text()
@@ -270,7 +327,12 @@ const fetchDetailsMovie = async (id: string) => {
         .trim(),
 
       country: $(".elements").find(".row-line:eq(4)").find("a").text(),
-      production: $(".elements").find(".row-line").last().find("a")?.text(),
+      production: $(".elements")
+        .find(".row-line")
+        .last()
+        .find("a")
+        ?.map((_: number, el: cheerio.Element) => $(el).text())
+        .get(),
     },
   };
 
@@ -290,4 +352,5 @@ export {
   fetchSearch,
   fetchVideo,
   fetchDetailsMovie,
+  fetchDetailsTVShow,
 };
