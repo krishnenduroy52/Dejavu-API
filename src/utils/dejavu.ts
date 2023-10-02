@@ -6,6 +6,8 @@ import type {
   IError,
   ITrendingMoviesResponse,
   ITrendingMovie,
+  ITrendingTVShowsResponse,
+  ITrendingTVShow,
 } from "../types/dejavu.d.ts";
 
 const BASE_URL: string = process.env.URL || "";
@@ -46,12 +48,14 @@ const fetchTrendingMovies = async (): Promise<
   }
 };
 
-const fetchTrendingTVShow = async () => {
+const fetchTrendingTVShow = async (): Promise<
+  ITrendingTVShowsResponse | IError
+> => {
   try {
     const { data } = await axiosInstance.get("/home");
     const $ = load(data);
 
-    const tvshow: any[] = [];
+    const tvshow: ITrendingTVShow[] = [];
     $("#trending-tv > .film_list > .film_list-wrap > div").each(
       (index: number, element: any) => {
         const $filmDetail = $(element).find(".film-detail");
@@ -71,11 +75,11 @@ const fetchTrendingTVShow = async () => {
       currentPage: 1,
       hasNextPage: false,
       results: tvshow.slice(0, -1),
-      total: tvshow.length - 1,
+      length: tvshow.length - 1,
       "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
-    return { error };
+    return { error: `We are facing a problem  ${error}` };
   }
 };
 

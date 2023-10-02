@@ -11,12 +11,31 @@ export type ITrendingMoviesResponse = {
 };
 
 export type ITrendingMovie = {
-    id: string;
-    title: string;
-    img: string;
-    detail: {
-      rating: string;
-      quality: string;
-      year: string;
-    };
+  id: string;
+  title: string;
+  img: string;
+  detail: {
+    rating: string;
+    quality: string;
+    year: string;
   };
+};
+
+export type ITrendingTVShowsResponse = {
+  currentPage: number;
+  hasNextPage: boolean;
+  results: ITrendingTVShow[];
+  length: number;
+  "buy me a coffee": string;
+};
+
+export type ITrendingTVShow = {
+  id: string;
+  title: string;
+  img: string;
+  detail: {
+    rating: string;
+    quality: string;
+    recent: string;
+  };
+};
