@@ -53,13 +53,13 @@ To start contributing, follow the below guidelines:
 **2.** Clone your forked copy of the project.
 
 ```
-git clone --depth 1 https://github.com/<your_user_name>/Movie-Streaming-Website.git
+git clone --depth 1 https://github.com/<your_user_name>/movwatch-api.git
 ```
 
 **3.** Navigate to the project directory :file_folder: .
 
 ```
-cd Movie-Streaming-Website
+cd movwatch-api
 ```
 
 **4.** Add a reference(remote) to the original repository.
@@ -141,7 +141,7 @@ git push -u origin <your_branch_name>
      
 <!-- ## Code of Conduct
 <p align="center">
-<a href="https://github.com/QAZIMAAZARSHAD/Movie-Streaming-Website/blob/master/CODE_OF_CONDUCT.md">
+<a href="https://github.com/QAZIMAAZARSHAD/movwatch-api/blob/master/CODE_OF_CONDUCT.md">
 <img width=55% src="https://media.giphy.com/media/qHRwTyhWIj4UU/200w_d.gif"></p>
 <h5 align="center"><b>Click to read</b></a>
    -->
