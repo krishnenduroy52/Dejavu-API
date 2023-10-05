@@ -1,5 +1,7 @@
 const axios = require("axios");
 const { load } = require("cheerio");
+// const
+
 require("dotenv").config();
 
 import type {
@@ -225,16 +227,21 @@ const fetchSearch = async ({
 };
 
 const fetchVideo = async () => {
-  const { data } = await axios.get(
-    "https://megacloud.tv/embed-1/ajax/e-1/getSources?id=9JXCOiGwpL8b",
-    {
-      headers: {
-        "x-requested-with": "XMLHttpRequest",
-        Referer: "https://megacloud.tv/embed-1/e-1/9JXCOiGwpL8b?z=",
-      },
-    }
-  );
-  return data;
+  try {
+    // https://raw.githubusercontent.com/Claudemirovsky/keys/e$type/key
+    // const key = await axios.get(
+    //   "https://raw.githubusercontent.com/Claudemirovsky/keys/e$type/key"
+    // );
+    // console.log(key.data);
+    // return key.data.toString();
+
+    const { data } = await axios.get(
+      "https://watch-free.tv/fetch/1b675cf?_token=63848622a2bb5"
+    );
+    return data;
+  } catch (error) {
+    return { error };
+  }
 };
 
 const fetchDetailsMovie = async (id: string) => {
