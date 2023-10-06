@@ -228,21 +228,42 @@ const fetchSearch = async ({
 
 const fetchVideo = async () => {
   try {
-    // https://raw.githubusercontent.com/Claudemirovsky/keys/e$type/key
-    // const key = await axios.get(
-    //   "https://raw.githubusercontent.com/Claudemirovsky/keys/e$type/key"
-    // );
-    // console.log(key.data);
-    // return key.data.toString();
+    const url =
+      "https://ww1.m4ufree.tv/watch-yyiby-oppenheimer-2023-movie-online-free-m4ufree.html";
 
-    const { data } = await axios.get(
-      "https://watch-free.tv/fetch/1b675cf?_token=63848622a2bb5"
-    );
-    return data;
+    // Function to fetch and parse the webpage
+    const res = await axios.get(url);
+    const $ = load(res.data);
+    const m3u8Link = $('a[href$=".m3u8"]').attr("href");
+
+    if (m3u8Link) {
+      console.log("M3U8 Link:", m3u8Link);
+    } else {
+      console.log("M3U8 link not found on the page.");
+    }
+    return { done: "done" };
   } catch (error) {
     return { error };
   }
 };
+
+// const fetchVideo = async () => {
+//   try {
+//     // https://raw.githubusercontent.com/Claudemirovsky/keys/e$type/key
+//     // const key = await axios.get(
+//     //   "https://raw.githubusercontent.com/Claudemirovsky/keys/e$type/key"
+//     // );
+//     // console.log(key.data);
+//     // return key.data.toString();
+
+//     const { data } = await axios.get(
+//       "https://watch-free.tv/fetch/1b675cf?_token=63848622a2bb5"
+//     );
+//     return data;
+//   } catch (error) {
+//     return { error };
+//   }
+// };
 
 const fetchDetailsMovie = async (id: string) => {
   const { data } = await axiosInstance.get(`/movie/${id}`);
