@@ -10,6 +10,7 @@ import type {
   ITrendingMovie,
   ITrendingTVShowsResponse,
   ITrendingTVShow,
+  ILatestMoviesResponse,
 } from "../types/dejavu.d.ts";
 
 const BASE_URL: string = process.env.URL || "";
@@ -85,7 +86,7 @@ const fetchTrendingTVShow = async (): Promise<
   }
 };
 
-const fetchLatestMovie = async () => {
+const fetchLatestMovie = async () : Promise<ILatestMoviesResponse | IError> => {
   try {
     const { data } = await axiosInstance.get("/home");
     const $ = load(data);
@@ -114,7 +115,7 @@ const fetchLatestMovie = async () => {
       "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
-    return { error };
+    return { error: `We are facing a problem  ${error}` };
   }
 };
 
