@@ -58,3 +58,14 @@ export type ILatestMovie = {
     year: string;
   }
 }
+
+export type ITrendingTVShow = {
+  id: string;
+  title: string;
+  img: string;
+  detail: {
+    rating: string;
+    quality: string;
+    recent: string;
+  };
+};
