@@ -59,7 +59,15 @@ export type ILatestMovie = {
   }
 }
 
-export type ITrendingTVShow = {
+export type ILatestTVShowsResponse = {
+  currentPage: number;
+  hasNextPage: boolean;
+  results: ILatestTVShow[];
+  total: number;
+  "buy me a coffee": string;
+}
+
+export type ILatestTVShow = {
   id: string;
   title: string;
   img: string;
