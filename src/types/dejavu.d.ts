@@ -39,3 +39,22 @@ export type ITrendingTVShow = {
     recent: string;
   };
 };
+
+export type ILatestMoviesResponse = {
+  currentPage: number;
+  hasNextPage: boolean;
+  results: ILatestMovie[];
+  total: number;
+  "buy me a coffee": string;
+}
+
+export type ILatestMovie = {
+  id: string;
+  title: string;
+  img: string;
+  detail: {
+    rating: string;
+    quality: string;
+    year: string;
+  }
+}
