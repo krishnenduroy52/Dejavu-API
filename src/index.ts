@@ -36,7 +36,7 @@ app.get("/", (req: any, res: any) => {
     "endpoints(Under Development)": ["/details/tv/:id"],
     "endpoints(Not Working :) Pain in my ass)": ["/watch/:id"],
     "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
-    "github-Link": "https://github.com/krishnenduroy52/movwatch-api",
+    "github-Link": "https://github.com/krishnenduroy52/Dejavu-API",
   };
   res.status(200).send(homeinfo);
 });
