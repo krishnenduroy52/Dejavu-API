@@ -1,6 +1,5 @@
 const axios = require("axios");
 const { load } = require("cheerio");
-// const
 
 require("dotenv").config();
 
@@ -11,6 +10,17 @@ import type {
   ITrendingTVShowsResponse,
   ITrendingTVShow,
   ILatestMoviesResponse,
+  ILatestMovie,
+  ILatestTVShowsResponse,
+  ILatestTVShow,
+  ICommingSoonResponse,
+  ICommingSoon,
+  ISearchResponse,
+  ISearch,
+  IDetailsMovieResponse,
+  IDetailsMovie,
+  IDetailsTVShowResponse,
+  IDetailsTVShow,
 } from "../types/dejavu.d.ts";
 
 const BASE_URL: string = process.env.URL || "";
@@ -86,12 +96,12 @@ const fetchTrendingTVShow = async (): Promise<
   }
 };
 
-const fetchLatestMovie = async () : Promise<ILatestMoviesResponse | IError> => {
+const fetchLatestMovie = async (): Promise<ILatestMoviesResponse | IError> => {
   try {
     const { data } = await axiosInstance.get("/home");
     const $ = load(data);
 
-    const tvshow: any[] = [];
+    const tvshow: ILatestMovie[] = [];
     $(".section-id-02:eq(0) > .film_list > .film_list-wrap > div").each(
       (index: number, element: any) => {
         const $filmDetail = $(element).find(".film-detail");
@@ -119,12 +129,14 @@ const fetchLatestMovie = async () : Promise<ILatestMoviesResponse | IError> => {
   }
 };
 
-const fetchLatestTVShows = async () => {
+const fetchLatestTVShows = async (): Promise<
+  ILatestTVShowsResponse | IError
+> => {
   try {
     const { data } = await axiosInstance.get("/home");
     const $ = load(data);
 
-    const tvshow: any[] = [];
+    const tvshow: ILatestTVShow[] = [];
     $(".section-id-02:eq(1) > .film_list > .film_list-wrap > div").each(
       (index: number, element: any) => {
         const $filmDetail = $(element).find(".film-detail");
@@ -148,16 +160,16 @@ const fetchLatestTVShows = async () => {
       "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
-    return { error };
+    return { error: `We are facing a problem  ${error}` };
   }
 };
 
-const fetchCommingSoon = async () => {
+const fetchCommingSoon = async (): Promise<ICommingSoonResponse | IError> => {
   try {
     const { data } = await axiosInstance.get("/home");
     const $ = load(data);
 
-    const tvshow: any[] = [];
+    const tvshow: ICommingSoon[] = [];
     $(".section-id-02:eq(2) > .film_list > .film_list-wrap > div").each(
       (index: number, element: any) => {
         const $filmDetail = $(element).find(".film-detail");
@@ -180,7 +192,7 @@ const fetchCommingSoon = async () => {
       "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
-    return { error };
+    return { error: `We are facing a problem  ${error}` };
   }
 };
 
@@ -190,7 +202,7 @@ const fetchSearch = async ({
 }: {
   query: string;
   page: number;
-}) => {
+}): Promise<ISearchResponse | IError> => {
   if (query === undefined || query === "" || query == null)
     return { error: "No search query provided." };
   try {
@@ -202,7 +214,7 @@ const fetchSearch = async ({
           ? false
           : true
         : false;
-    const serachResult: any[] = [];
+    const serachResult: ISearch[] = [];
     $(".film_list-wrap > div").each((index: number, element: any) => {
       const $filmDetail = $(element).find(".film-detail");
       serachResult.push({
@@ -223,7 +235,7 @@ const fetchSearch = async ({
       "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
     };
   } catch (error) {
-    return { error };
+    return { error: `We are facing a problem  ${error}` };
   }
 };
 
@@ -234,11 +246,12 @@ const fetchVideo = async () => {
 
     // Function to fetch and parse the webpage
     const res = await axios.get(url);
-    const $ = load(res.data);
-    const m3u8Link = $('a[href$=".m3u8"]').attr("href");
-
-    if (m3u8Link) {
-      console.log("M3U8 Link:", m3u8Link);
+    console.log(res.data);
+    // const $ = load(res.data);
+    // const m3u8Link = $('a[href$=".m3u8"]').attr("href");
+    // console.log($.html());
+    if (false) {
+      // console.log("M3U8 Link:", m3u8Link);
     } else {
       console.log("M3U8 link not found on the page.");
     }
@@ -266,124 +279,137 @@ const fetchVideo = async () => {
 //   }
 // };
 
-const fetchDetailsMovie = async (id: string) => {
-  const { data } = await axiosInstance.get(`/movie/${id}`);
-  const $ = load(data);
+const fetchDetailsMovie = async (
+  id: string
+): Promise<IDetailsMovieResponse | IError> => {
+  try {
+    const { data } = await axiosInstance.get(`/movie/${id}`);
+    const $ = load(data);
 
-  const detail: any = {
-    title: $(".detail_page-watch")
-      .find(".heading-name")
-      .text()
-      .replace(/\n/g, "")
-      .trim(),
-    img: $(".film-poster > img").attr("data-src"),
-    description: $(".detail_page-watch")
-      .find(".description")
-      .text()
-      .split("\n")[2]
-      .trim(),
-    detail: {
-      category: "Movie",
-      released: $(".elements")
-        .find(".row-line:eq(0)")
+    const detail: IDetailsMovie = {
+      id: id,
+      title: $(".detail_page-watch")
+        .find(".heading-name")
         .text()
-        ?.split("\n")[1]
-        .trim()
-        .split(":")[1]
+        .replace(/\n/g, "")
         .trim(),
-      genre: $(".elements")
-        .find(".row-line:eq(1)")
-        .find("a")
-        ?.map((_: number, el: cheerio.Element) => $(el).text())
-        .get(),
-      casts: $(".elements")
-        .find(".row-line:eq(2)")
-        .find("a")
-        ?.map((_: number, el: cheerio.Element) => $(el).text())
-        .get(),
-      duration: $(".elements")
-        .find(".row-line")
-        .last()
-        .find("a")
-        ?.map((_: number, el: cheerio.Element) => $(el).text())
-        .get(),
+      img: $(".film-poster > img").attr("data-src"),
+      description: $(".detail_page-watch")
+        .find(".description")
+        .text()
+        .split("\n")[2]
+        .trim(),
+      details: {
+        category: "Movie",
+        released: $(".elements")
+          .find(".row-line:eq(0)")
+          .text()
+          ?.split("\n")[1]
+          .trim()
+          .split(":")[1]
+          .trim(),
+        genere: $(".elements")
+          .find(".row-line:eq(1)")
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+        casts: $(".elements")
+          .find(".row-line:eq(2)")
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+        duration: $(".elements")
+          .find(".row-line")
+          .last()
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
 
-      country: $(".elements").find(".row-line:eq(4)").find("a").text(),
-      production: $(".elements")
-        .find(".row-line")
-        .last()
-        .find("a")
-        ?.map((_: number, el: cheerio.Element) => $(el).text())
-        .get(),
-    },
-  };
+        country: $(".elements").find(".row-line:eq(4)").find("a").text(),
+        production: $(".elements")
+          .find(".row-line")
+          .last()
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+      },
+    };
 
-  return {
-    result: detail,
-    "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
-  };
+    return {
+      result: detail,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
+    };
+  } catch (error) {
+    return { error: `We are facing a problem  ${error}` };
+  }
 };
 
-const fetchDetailsTVShow = async (id: string) => {
-  const { data } = await axiosInstance.get(`/tv/${id}`);
-  const $ = load(data);
+const fetchDetailsTVShow = async (
+  id: string
+): Promise<IDetailsTVShowResponse | IError> => {
+  try {
+    const { data } = await axiosInstance.get(`/tv/${id}`);
+    const $ = load(data);
 
-  const detail: any = {
-    title: $(".detail_page-watch")
-      .find(".heading-name")
-      .text()
-      .replace(/\n/g, "")
-      .trim(),
-    img: $(".film-poster > img").attr("data-src"),
-    description: $(".detail_page-watch")
-      .find(".description")
-      .text()
-      .split("\n")[2]
-      .trim(),
-    detail: {
-      category: "TV",
-      released: $(".elements")
-        .find(".row-line:eq(0)")
+    const detail: any = {
+      id: id,
+      title: $(".detail_page-watch")
+        .find(".heading-name")
         .text()
-        ?.split("\n")[1]
-        .trim()
-        .split(":")[1]
+        .replace(/\n/g, "")
         .trim(),
-      genre: $(".elements")
-        .find(".row-line:eq(1)")
-        .find("a")
-        ?.map((_: number, el: cheerio.Element) => $(el).text())
-        .get(),
-      casts: $(".elements")
-        .find(".row-line:eq(2)")
-        .find("a")
-        ?.map((_: number, el: cheerio.Element) => $(el).text())
-        .get(),
-      duration: $(".elements")
-        .find(".row-line:eq(3)")
+      img: $(".film-poster > img").attr("data-src"),
+      description: $(".detail_page-watch")
+        .find(".description")
         .text()
-        ?.split("\n")[1]
-        .trim()
-        .split(":")[1]
+        .split("\n")[2]
         .trim(),
+      detail: {
+        category: "TV",
+        released: $(".elements")
+          .find(".row-line:eq(0)")
+          .text()
+          ?.split("\n")[1]
+          .trim()
+          .split(":")[1]
+          .trim(),
+        genre: $(".elements")
+          .find(".row-line:eq(1)")
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+        casts: $(".elements")
+          .find(".row-line:eq(2)")
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+        duration: $(".elements")
+          .find(".row-line:eq(3)")
+          .text()
+          ?.split("\n")[1]
+          .trim()
+          .split(":")[1]
+          .trim(),
 
-      country: $(".elements").find(".row-line:eq(4)").find("a").text(),
-      production: $(".elements")
-        .find(".row-line")
-        .last()
-        .find("a")
-        ?.map((_: number, el: cheerio.Element) => $(el).text())
-        .get(),
-    },
-  };
+        country: $(".elements").find(".row-line:eq(4)").find("a").text(),
+        production: $(".elements")
+          .find(".row-line")
+          .last()
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+      },
+    };
 
-  return {
-    result: detail,
-    "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
-  };
+    return {
+      result: detail,
+      "buy me a coffee": "https://www.buymeacoffee.com/krishnendu",
+    };
+  } catch (error) {
+    return { error: `We are facing a problem  ${error}` };
+  }
 };
 
-// https://megacloud.tv/embed-1/e-1/9JXCOiGwpL8b?z=
 export {
   fetchTrendingMovies,
   fetchTrendingTVShow,
