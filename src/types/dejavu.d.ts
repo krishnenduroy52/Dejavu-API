@@ -125,7 +125,7 @@ export type IDetailsMovie = {
     genere: string[];
     casts: string[];
     duration: string;
-    country: string;
+    country: string[];
     production: string[];
   };
 };
@@ -146,7 +146,7 @@ export type IDetailsTVShow = {
     genere: string[];
     casts: string[];
     duration: string;
-    country: string;
+    country: string[];
     production: string[];
   };
 };

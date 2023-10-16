@@ -325,7 +325,12 @@ const fetchDetailsMovie = async (
           ?.map((_: number, el: cheerio.Element) => $(el).text())
           .get(),
 
-        country: $(".elements").find(".row-line:eq(4)").find("a").text(),
+        country: $(".elements")
+          .find(".row-line:eq(4)")
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+        
         production: $(".elements")
           .find(".row-line")
           .last()
@@ -391,7 +396,12 @@ const fetchDetailsTVShow = async (
           .split(":")[1]
           .trim(),
 
-        country: $(".elements").find(".row-line:eq(4)").find("a").text(),
+        country: $(".elements")
+          .find(".row-line:eq(4)")
+          .find("a")
+          ?.map((_: number, el: cheerio.Element) => $(el).text())
+          .get(),
+        
         production: $(".elements")
           .find(".row-line")
           .last()
